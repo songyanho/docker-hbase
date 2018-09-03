@@ -64,29 +64,32 @@ services:
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=0.0.0.0:2888:3888
     ports:
-      - 2181:2181
+      - 52181:2181
 
   hbase-master:
     image: bde2020/hbase-master:1.0.0-hbase1.2.6
     container_name: hbase-master
-    hostname: hbase-master
+    hostname: shopee-bi-dev00
     env_file:
       - ./hbase-distributed-local.env
     environment:
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075 zoo:2181"
     ports:
+      - 16000:16000
       - 16010:16010
+      - 58080:8080
 
   hbase-region:
     image: bde2020/hbase-regionserver:1.0.0-hbase1.2.6
     container_name: hbase-regionserver
-    hostname: hbase-regionserver
+    hostname: shopee-bi-dev00
     env_file:
       - ./hbase-distributed-local.env
     environment:
-      HBASE_CONF_hbase_regionserver_hostname: hbase-region
+      HBASE_CONF_hbase_regionserver_hostname: shopee-bi-dev00
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075 zoo:2181 hbase-master:16010"
     ports:
+      - 16020:16020
       - 16030:16030
 
 volumes:
